@@ -95,21 +95,21 @@ function layout() {
   line.style.width = (centre(CARDS.length - 1) - centre(0) + 2 * LINE_OVERHANG) + 'px';
 }
 
-// Mask of the line: faded ends AND a gap around each arrow. The gap positions are CSS variables (--ax, --bx).
-function gapMask(xVar) {
+// Fades of the line: faded ends AND a gap around each arrow. The gap positions are CSS variables (--ax, --bx).
+// Drawn as white gradient layers over a solid line colour (the page is white), not as a CSS mask: Firefox drops a mask
+// on an element this wide (tens of thousands of px) and the line then shows no fade at all.
+function gapFade(xVar) {
   const N = 8, left = [], right = [];
   for (let k = 0; k <= N; k++) {
     const u = k / N, d = GAP_CLEAR + GAP_RAMP * (1 - u);       // u = 0 far from the arrow ... 1 at the arrow
-    const stop = `rgb(0 0 0 / ${(1 - smoothstep(u)).toFixed(3)})`;
+    const stop = `rgb(255 255 255 / ${smoothstep(u).toFixed(3)})`;
     left.push(`${stop} calc(var(${xVar}) - ${d.toFixed(1)}px)`);
     right.unshift(`${stop} calc(var(${xVar}) + ${d.toFixed(1)}px)`);
   }
   return `linear-gradient(to right, ${left.concat(right).join(', ')})`;
 }
-const endsMask = `linear-gradient(to right, transparent, #000 ${END_FADE}px, #000 calc(100% - ${END_FADE}px), transparent)`;
-line.style.webkitMaskImage = line.style.maskImage = `${endsMask}, ${gapMask('--ax')}, ${gapMask('--bx')}`;
-line.style.webkitMaskComposite = 'source-in, source-in';
-line.style.maskComposite = 'intersect, intersect';
+const endsFade = `linear-gradient(to right, #fff, rgb(255 255 255 / 0) ${END_FADE}px, rgb(255 255 255 / 0) calc(100% - ${END_FADE}px), #fff)`;
+line.style.backgroundImage = `${endsFade}, ${gapFade('--ax')}, ${gapFade('--bx')}, linear-gradient(var(--main-mid), var(--main-mid))`;
 
 const setCamera = x => { track.style.transform = `translateX(${innerWidth / 2 - x}px)`; };
 
