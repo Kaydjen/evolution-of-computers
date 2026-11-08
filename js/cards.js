@@ -24,8 +24,8 @@
   }
 
   // An image frame; without a picture it stays an empty neutral block.
-  function frame(img) {
-    var f = el('div', 'media');
+  function frame(img, kind) {
+    var f = el('div', 'media' + (kind ? ' ' + kind : ''));
     if (img && img.src) {
       var i = document.createElement('img');
       i.src = img.src;
@@ -101,7 +101,12 @@
         ? centre('Breakthrough', para(c.breakthrough), 'h2')
         : centre('Principle', steps(c.principle), false);
       mid.className = 'center-top';
-      add(top, frame(media.photo && media.photo[0]), mid, frame(media.diagram));
+      // A missing picture leaves no frame: the layout adapts to what exists.
+      var photo = media.photo && media.photo[0], hasPhoto = !!(photo && photo.src), hasDiagram = !!(media.diagram && media.diagram.src);
+      if (hasPhoto) top.appendChild(frame(photo));
+      top.appendChild(mid);
+      if (hasDiagram) top.appendChild(frame(media.diagram, 'diagram'));
+      top.classList.add(hasPhoto && hasDiagram ? 'both' : hasPhoto ? 'solo' : hasDiagram ? 'nophoto' : 'bare');
       main.appendChild(top);
     }
 
@@ -123,8 +128,10 @@
     btn.setAttribute('aria-expanded', 'false');
     btn.setAttribute('aria-controls', 'panel-' + c.n);
     var pn = panel(c);
+    pn.inert = true;   // a closed panel is hidden from keyboard and screen readers
     btn.addEventListener('click', function () {
       var open = pn.classList.toggle('open');
+      pn.inert = !open;
       btn.setAttribute('aria-expanded', open);
     });
     add(main, add(more, btn));
@@ -132,7 +139,7 @@
     return add(card, main, pn);
   }
 
-  // "Could" and "Could not" share one cell, as in the accepted mechanism card.
+  // "Could" and "Could not" share one cell.
   function wrapCould(c) {
     var cell = el('div', 'cell'), box = el('div', 'side');
     add(box, block('Could'), lines(c.could), block('Could not'), lines(c.couldNot));

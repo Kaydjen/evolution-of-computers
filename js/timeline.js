@@ -26,6 +26,12 @@ const END_FADE = 450;       // fade-out length at the ends of the line, px
 const GAP_CLEAR = 22;       // line fully empty around an arrow centre, px
 const GAP_RAMP = 110;       // soft fade length beyond it, px
 const TRAIL_MAX = 200;      // longest trail behind the moving arrow, px
+const JUMP_BASE = 500;      // a jump by dots: base time, ms ...
+const JUMP_PER_CARD = 60;   // ... plus this per card passed ...
+const JUMP_MAX = 1400;      // ... but never longer than this, ms
+const PRELOAD = 2;          // images of this many cards on each side of the current one are loaded in advance
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)');   // then moves are short and have no trail
+const moveTime = () => REDUCED.matches ? 300 : DURATION;
 
 const CARDS = window.CARDS;
 
@@ -176,6 +182,40 @@ const ARROWS = {
   '-1': new Arrow(-1, document.getElementById('back'), '--bx', 'hidden'),
 };
 
+// ---------- dots (fast jump to any card) ----------
+const dotsEl = document.getElementById('dots');
+// Tooltip above a dot: centred on the dot, kept inside the screen (the little pointer stays on the dot).
+const tipEl = document.createElement('div');
+tipEl.id = 'dot-tip';
+tipEl.setAttribute('aria-hidden', 'true');
+document.body.appendChild(tipEl);
+function showTip(dot, text) {
+  tipEl.textContent = text;
+  const r = dot.getBoundingClientRect(), cx = r.left + r.width / 2, w = tipEl.offsetWidth, m = 8;
+  const left = Math.max(m, Math.min(innerWidth - m - w, cx - w / 2));
+  tipEl.style.left = left + 'px';
+  tipEl.style.setProperty('--pointer', (cx - left) + 'px');
+  tipEl.classList.add('show');
+}
+function hideTip() { tipEl.classList.remove('show'); }
+const dotEls = CARDS.map((c, i) => {
+  const b = document.createElement('button');
+  b.className = 'dot';
+  b.setAttribute('aria-label', c.name);
+  b.addEventListener('click', () => { hideTip(); jumpTo(i); });
+  b.addEventListener('pointerenter', e => { preload(i, 1); if (e.pointerType === 'mouse') showTip(b, c.name); });
+  b.addEventListener('focus', () => { preload(i, 1); if (b.matches(':focus-visible')) showTip(b, c.name); });
+  b.addEventListener('pointerleave', hideTip);
+  b.addEventListener('blur', hideTip);
+  dotsEl.appendChild(b);
+  return b;
+});
+// Lazy images of cards near the target are loaded in advance, so a card never arrives with grey frames.
+function preload(i, r) {
+  cardEls.forEach((e, k) => { if (Math.abs(k - i) <= r) e.querySelectorAll('img[loading="lazy"]').forEach(m => { m.loading = 'eager'; }); });
+}
+const markDot = i => dotEls.forEach((b, k) => { b.classList.toggle('current', k === i); if (k === i) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+
 // ---------- state ----------
 let index = 0;             // current card
 let busy = false;          // a move is running
@@ -183,6 +223,8 @@ let resizePending = false; // the screen was resized during a move
 
 function place(i) {
   setCamera(centre(i));
+  markDot(i);
+  preload(i, PRELOAD);
   setCurrent(i);
   for (const a of Object.values(ARROWS)) {
     const on = hasCard(i, a.kind);
@@ -207,6 +249,9 @@ function go(dir) {
   mover.el.classList.add('active');
   other.leaveBehind();
   const oldIndex = index;
+  const dur = moveTime();
+  const active = document.activeElement;
+  const keepFocus = !!active && (active === mover.el || (active.closest && !!active.closest('.card')));
 
   const fromQ = dir * centre(index);
   const restQ = fromQ + REST_OFF;           // where the arrow waits at the start
@@ -220,7 +265,7 @@ function go(dir) {
   let glideX = null;                        // arrow position once it is under the next card
 
   function frame(now) {
-    const t = clamp01((now - t0) / DURATION);
+    const t = clamp01((now - t0) / dur);
     const cam = fromQ + SPACING * easeInOutCubic(t);   // screen centre
     setCamera(dir * cam);
     const dt = frameDt(now, last); last = now;
@@ -249,7 +294,7 @@ function go(dir) {
     }
 
     mover.setX(dir * x);
-    setTrail(dir, dir * x, (x - prevX) / dt);
+    setTrail(dir, dir * x, REDUCED.matches ? 0 : (x - prevX) / dt);
     prevX = x;
     if (t < 1 || endQ - x > 0.5) { requestAnimationFrame(frame); return; }
     finish();
@@ -260,6 +305,8 @@ function go(dir) {
     mover.el.classList.remove('active');
     index += dir;
     setCurrent(index);
+    markDot(index);
+    preload(index, PRELOAD);
     mover.state = 'rest';
     mover.setEnabled(true);
     // Nowhere to go further in this direction: the arrow slides under its card.
@@ -270,6 +317,43 @@ function go(dir) {
     const underOldCard = Math.abs(other.x - centre(oldIndex)) <= CARD_W / 2 - 20;
     const inView = Math.abs(other.x - centre(index)) < innerWidth / 2 + 60;
     if (inView && !underOldCard) other.slideIn(oldIndex, 0, bringOther); else bringOther();
+    busy = false;
+    // Keyboard focus was on the arrow or inside the old card, which became inert: move it to the arrow (or the current dot).
+    if (keepFocus) (hasCard(index, dir) ? mover.el : dotEls[index]).focus({ preventScroll: true });
+    if (resizePending) { resizePending = false; layout(); place(index); }
+  }
+  requestAnimationFrame(frame);
+}
+
+// ---------- jump by a dot ----------
+// Both arrows slide under the current card, the screen glides to the chosen card (shorter than one arrow move),
+// then both arrows come out of the new card.
+function jumpTo(target) {
+  if (busy || target === index) return;
+  busy = true;
+  setCurrent(null);
+  markDot(target);
+  preload(target, PRELOAD);
+  for (const a of Object.values(ARROWS)) {
+    a.el.classList.remove('active');
+    if (a.state === 'rest') a.slideIn(index);
+    else { a.token++; a.leaving = false; a.setX(hiddenX(index, a.kind)); a.state = 'hidden'; a.setEnabled(false); }   // an arrow still coming out is taken in at once
+  }
+  const from = centre(index), to = centre(target);
+  const dur = REDUCED.matches ? 250 : Math.min(JUMP_MAX, JUMP_BASE + JUMP_PER_CARD * Math.abs(target - index));
+  const t0 = performance.now() + SLIDE_IN_MS;
+  function frame(now) {
+    const u = clamp01((now - t0) / dur);
+    setCamera(from + (to - from) * easeInOutCubic(u));
+    if (u < 1) { requestAnimationFrame(frame); return; }
+    index = target;
+    setCurrent(index);
+    for (const a of Object.values(ARROWS)) {
+      a.token++;
+      a.leaving = false;
+      a.setX(hiddenX(index, a.kind));
+      if (hasCard(index, a.kind)) a.slideOut(index, OUT_DELAY); else { a.state = 'hidden'; a.setEnabled(false); }
+    }
     busy = false;
     if (resizePending) { resizePending = false; layout(); place(index); }
   }

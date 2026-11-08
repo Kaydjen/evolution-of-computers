@@ -522,8 +522,7 @@ window.CARDS = [
   "kicker": "Key technology",
   "meta": "2nd generation · about 1953-1964",
   "captions": [
-   "IBM 7090 (1959)",
-   "Manchester TC (1953)"
+   "IBM 7090 (1959)"
   ],
   "principle": "A transistor is a tiny crystal of semiconductor with three contacts. A small voltage on one contact controls a larger current between the other two, so it works as a switch. It has no heated wire and no glass, so it is small, uses little power and lasts longer than a tube.",
   "compare": {
