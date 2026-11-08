@@ -45,6 +45,7 @@ window.MEDIA = {
   "photo": [
    {
     "src": "images/05-pascaline.jpg",
+    "aspect": "1280 / 664",
     "alt": "Pascaline"
    }
   ],

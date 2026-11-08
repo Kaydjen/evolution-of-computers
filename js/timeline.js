@@ -30,10 +30,8 @@ const JUMP_BASE = 500;      // a jump by dots: base time, ms ...
 const JUMP_PER_CARD = 60;   // ... plus this per card passed ...
 const JUMP_MAX = 1400;      // ... but never longer than this, ms
 const PRELOAD = 2;          // images of this many cards on each side of the current one are loaded in advance
-const REDUCED = matchMedia('(prefers-reduced-motion: reduce)');   // then moves are short and have no trail
-const moveTime = () => REDUCED.matches ? 300 : DURATION;
 
-const CARDS = window.CARDS;
+let CARDS = window.I18N.cards();   // texts of the current language (see applyLang)
 
 // ---------- geometry (depends on the screen width, see layout()) ----------
 let CARD_W = CARD_W_MAX, SPACING = CARD_W + CARD_GAP, ARROW_GAP = 60, REST_OFF = CARD_W / 2 + ARROW_GAP;
@@ -72,6 +70,7 @@ const track = document.getElementById('track');
 const line = document.getElementById('line');
 const trail = document.getElementById('trail');
 const cardEls = CARDS.map(c => { const e = window.renderCard(c); track.appendChild(e); return e; });
+const langEl = document.getElementById('lang');
 let lineLeft = 0;
 
 // Card width follows the screen: the arrows beside the card must stay on screen. Called at start and when the screen is resized.
@@ -203,8 +202,8 @@ const dotEls = CARDS.map((c, i) => {
   b.className = 'dot';
   b.setAttribute('aria-label', c.name);
   b.addEventListener('click', () => { hideTip(); jumpTo(i); });
-  b.addEventListener('pointerenter', e => { preload(i, 1); if (e.pointerType === 'mouse') showTip(b, c.name); });
-  b.addEventListener('focus', () => { preload(i, 1); if (b.matches(':focus-visible')) showTip(b, c.name); });
+  b.addEventListener('pointerenter', e => { preload(i, 1); if (e.pointerType === 'mouse') showTip(b, CARDS[i].name); });
+  b.addEventListener('focus', () => { preload(i, 1); if (b.matches(':focus-visible')) showTip(b, CARDS[i].name); });
   b.addEventListener('pointerleave', hideTip);
   b.addEventListener('blur', hideTip);
   dotsEl.appendChild(b);
@@ -249,7 +248,7 @@ function go(dir) {
   mover.el.classList.add('active');
   other.leaveBehind();
   const oldIndex = index;
-  const dur = moveTime();
+  const dur = DURATION;
   const active = document.activeElement;
   const keepFocus = !!active && (active === mover.el || (active.closest && !!active.closest('.card')));
 
@@ -294,7 +293,7 @@ function go(dir) {
     }
 
     mover.setX(dir * x);
-    setTrail(dir, dir * x, REDUCED.matches ? 0 : (x - prevX) / dt);
+    setTrail(dir, dir * x, (x - prevX) / dt);
     prevX = x;
     if (t < 1 || endQ - x > 0.5) { requestAnimationFrame(frame); return; }
     finish();
@@ -340,7 +339,7 @@ function jumpTo(target) {
     else { a.token++; a.leaving = false; a.setX(hiddenX(index, a.kind)); a.state = 'hidden'; a.setEnabled(false); }   // an arrow still coming out is taken in at once
   }
   const from = centre(index), to = centre(target);
-  const dur = REDUCED.matches ? 250 : Math.min(JUMP_MAX, JUMP_BASE + JUMP_PER_CARD * Math.abs(target - index));
+  const dur = Math.min(JUMP_MAX, JUMP_BASE + JUMP_PER_CARD * Math.abs(target - index));
   const t0 = performance.now() + SLIDE_IN_MS;
   function frame(now) {
     const u = clamp01((now - t0) / dur);
@@ -359,6 +358,22 @@ function jumpTo(target) {
   }
   requestAnimationFrame(frame);
 }
+
+// ---------- language ----------
+// The cards are drawn again in the new language; the screen, the arrows and the current card stay as they are.
+function applyLang() {
+  CARDS = window.I18N.cards();
+  cardEls.forEach((old, i) => { const e = window.renderCard(CARDS[i]); old.replaceWith(e); cardEls[i] = e; });
+  layout();
+  setCurrent(busy ? null : index);
+  preload(index, PRELOAD);
+  dotEls.forEach((b, i) => b.setAttribute('aria-label', CARDS[i].name));
+  hideTip();
+}
+langEl.addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (b && window.I18N.set(b.dataset.lang)) applyLang();
+});
 
 // ---------- input ----------
 ARROWS[1].el.addEventListener('click', () => go(1));

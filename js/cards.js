@@ -10,8 +10,9 @@
     for (var i = 1; i < arguments.length; i++) parent.appendChild(arguments[i]);
     return parent;
   }
+  var t = function (k) { return window.I18N.t(k); };   // interface string in the current language
   function block(title, tag, cls) {
-    return el(tag || 'h3', cls, title);
+    return el(tag || 'h3', cls, t(title));
   }
   function para(text) { return el('p', '', text); }
   function lines(list) {
@@ -24,12 +25,13 @@
   }
 
   // An image frame; without a picture it stays an empty neutral block.
-  function frame(img, kind) {
+  function frame(img, kind, alt) {
     var f = el('div', 'media' + (kind ? ' ' + kind : ''));
     if (img && img.src) {
       var i = document.createElement('img');
       i.src = img.src;
-      i.alt = img.alt || '';
+      i.alt = alt || img.alt || '';
+      if (img.aspect) f.style.aspectRatio = img.aspect;   // a frame cut to the picture (no bars)
       i.loading = 'lazy';
       f.appendChild(i);
     } else {
@@ -71,7 +73,7 @@
         });
         inner.appendChild(grid);
       } else {
-        add(inner, el('h3', '', m.label), para(m.text));
+        add(inner, el('h3', '', m.key ? t(m.key) : m.label), para(m.text));
       }
     });
     return add(outer, add(clip, inner));
@@ -80,6 +82,10 @@
   function render(c) {
     var media = (window.MEDIA && window.MEDIA[c.n]) || {};
     var card = el('article', 'card ' + c.type);
+    var alt = function (kind, i) {
+      var m = kind === 'diagram' ? media.diagram : media.photo && media.photo[i];
+      return window.I18N.alt(c.n, kind, i, m && m.alt);
+    };
     var main = el('div', 'main');
     card.setAttribute('aria-label', c.name);
 
@@ -89,7 +95,7 @@
         photos.style.setProperty('--n', c.captions.length);
         c.captions.forEach(function (cap, i) {
           var fig = el('figure');
-          add(fig, frame(media.photo && media.photo[i]), el('figcaption', '', cap));
+          add(fig, frame(media.photo && media.photo[i], '', alt('photo', i)), el('figcaption', '', cap));
           photos.appendChild(fig);
         });
         main.appendChild(photos);
@@ -103,9 +109,9 @@
       mid.className = 'center-top';
       // A missing picture leaves no frame: the layout adapts to what exists.
       var photo = media.photo && media.photo[0], hasPhoto = !!(photo && photo.src), hasDiagram = !!(media.diagram && media.diagram.src);
-      if (hasPhoto) top.appendChild(frame(photo));
+      if (hasPhoto) top.appendChild(frame(photo, '', alt('photo', 0)));
       top.appendChild(mid);
-      if (hasDiagram) top.appendChild(frame(media.diagram, 'diagram'));
+      if (hasDiagram) top.appendChild(frame(media.diagram, 'diagram', alt('diagram')));
       top.classList.add(hasPhoto && hasDiagram ? 'both' : hasPhoto ? 'solo' : hasDiagram ? 'nophoto' : 'bare');
       main.appendChild(top);
     }
@@ -123,20 +129,81 @@
     }
     main.appendChild(bottom);
 
-    var more = el('div', 'more'), btn = el('button', '', 'Interesting');
+    var more = el('div', 'more'), btn = el('button', '', t('Interesting'));
     btn.type = 'button';
     btn.setAttribute('aria-expanded', 'false');
     btn.setAttribute('aria-controls', 'panel-' + c.n);
     var pn = panel(c);
     pn.inert = true;   // a closed panel is hidden from keyboard and screen readers
+    var isOpen = false, run = 0;
+    // The card grows or shrinks by animating its own height (the card is centred, so it moves smoothly with it).
+    // On closing, the scroll position runs to the top with the same easing, so there is no jump even from the bottom.
+    // The panel itself switches at once, so nothing reflows while the height changes.
+    var ease = function (u) { return u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; };
     btn.addEventListener('click', function () {
-      var open = pn.classList.toggle('open');
-      pn.inert = !open;
-      btn.setAttribute('aria-expanded', open);
+      isOpen = !isOpen;
+      cancelWheel();
+      var token = ++run;
+      var from = card.offsetHeight, scroll0 = card.scrollTop;   // what the user sees right now
+      pn.classList.add('open');                        // measure the target with the panel open ...
+      card.style.height = '';
+      var openH = card.offsetHeight;
+      pn.classList.remove('open');                     // ... and closed
+      var closedH = card.offsetHeight;
+      var to = isOpen ? openH : closedH;
+      pn.classList.add('open');                        // during the move the panel content stays in place
+      pn.inert = !isOpen;
+      btn.setAttribute('aria-expanded', isOpen);
+      var t0 = performance.now(), DUR = 350;
+      card.style.height = from + 'px';
+      card.scrollTop = scroll0;
+      function step(now) {
+        if (token !== run) return;
+        var u = Math.min(1, (now - t0) / DUR), e = ease(u);
+        card.style.height = (from + (to - from) * e) + 'px';
+        if (!isOpen) card.scrollTop = scroll0 * (1 - e);
+        if (u < 1) { requestAnimationFrame(step); return; }
+        card.style.height = '';
+        pn.classList.toggle('open', isOpen);
+        if (!isOpen) card.scrollTop = 0;
+      }
+      requestAnimationFrame(step);
     });
     add(main, add(more, btn));
 
-    return add(card, main, pn);
+    // Smooth wheel scrolling: the wheel only moves a target, the card eases towards it every frame
+    // (the system step of about 100 px per notch looks jerky, and some systems switch their own smoothing off).
+    var wTarget = 0, wRaf = 0, wLast = 0;
+    function wTick(now) {
+      var dt = Math.min(0.05, (now - wLast) / 1000), d = wTarget - card.scrollTop;
+      wLast = now;
+      if (Math.abs(d) < 0.5) { card.scrollTop = wTarget; wRaf = 0; return; }
+      var step = d * (1 - Math.exp(-dt * 12));
+      if (Math.abs(step) < 1) step = Math.sign(d) * Math.min(1, Math.abs(d));   // scrollTop is whole pixels: always move at least one
+      card.scrollTop += step;
+      wRaf = requestAnimationFrame(wTick);
+    }
+    function cancelWheel() { if (wRaf) cancelAnimationFrame(wRaf); wRaf = 0; }
+    card.addEventListener('wheel', function (e) {
+      if (e.ctrlKey || e.shiftKey || e.deltaY === 0) return;
+      var max = card.scrollHeight - card.clientHeight;
+      if (max <= 1) return;
+      var dy = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaMode === 2 ? e.deltaY * card.clientHeight : e.deltaY;
+      if (!wRaf) wTarget = card.scrollTop;
+      e.preventDefault();
+      wTarget = Math.max(0, Math.min(max, wTarget + dy));
+      if (!wRaf) { wLast = performance.now(); wRaf = requestAnimationFrame(wTick); }
+    }, { passive: false });
+
+    // A soft fade at the bottom edge shows that more content is below; it dies away as the end comes near.
+    var fade = el('div', 'fade');
+    function marks() {
+      var left = card.scrollHeight - card.clientHeight - card.scrollTop;   // content still hidden below, px
+      fade.style.opacity = Math.max(0, Math.min(1, left / 40));
+    }
+    card.addEventListener('scroll', marks, { passive: true });
+    if (window.ResizeObserver) { var ro = new ResizeObserver(marks); ro.observe(card); ro.observe(main); ro.observe(pn); }
+    return add(card, main, pn, fade);
   }
 
   // "Could" and "Could not" share one cell.
