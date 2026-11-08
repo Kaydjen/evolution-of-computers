@@ -73,6 +73,15 @@ const cardEls = CARDS.map(c => { const e = window.renderCard(c); track.appendChi
 const langEl = document.getElementById('lang');
 let lineLeft = 0;
 
+// Era captions: a thin caption on the line in the middle of the gap before card `before` (0-based). Only where the technology
+// of the machines changes and no technology card announces it: gears and cards -> electric counters and relays -> tubes.
+const ERAS = [{ before: 10, key: 'Electromechanical' }, { before: 13, key: 'Electronic' }];
+const eraEls = ERAS.map(() => {
+  const e = document.createElement('div'); e.className = 'era'; e.setAttribute('aria-hidden', 'true');
+  e.appendChild(document.createElement('span')); track.appendChild(e); return e;
+});
+const setEraText = () => ERAS.forEach((era, k) => { eraEls[k].firstChild.textContent = window.I18N.t(era.key); });
+
 // Card width follows the screen: the arrows beside the card must stay on screen. Called at start and when the screen is resized.
 function layout() {
   ARROW_GAP = innerWidth < 760 ? 20 : 60;
@@ -80,6 +89,7 @@ function layout() {
   SPACING = CARD_W + CARD_GAP;
   REST_OFF = CARD_W / 2 + ARROW_GAP;
   cardEls.forEach((e, i) => { e.style.width = CARD_W + 'px'; e.style.left = (centre(i) - CARD_W / 2) + 'px'; });
+  ERAS.forEach((era, k) => { eraEls[k].style.left = (centre(era.before) - SPACING / 2) + 'px'; });
   lineLeft = centre(0) - LINE_OVERHANG;
   line.style.left = lineLeft + 'px';
   line.style.width = (centre(CARDS.length - 1) - centre(0) + 2 * LINE_OVERHANG) + 'px';
@@ -365,6 +375,7 @@ function applyLang() {
   CARDS = window.I18N.cards();
   cardEls.forEach((old, i) => { const e = window.renderCard(CARDS[i]); old.replaceWith(e); cardEls[i] = e; });
   layout();
+  setEraText();
   setCurrent(busy ? null : index);
   preload(index, PRELOAD);
   dotEls.forEach((b, i) => b.setAttribute('aria-label', CARDS[i].name));
@@ -390,5 +401,6 @@ addEventListener('resize', () => {
 });
 
 layout();
+setEraText();
 place(0);
 })();

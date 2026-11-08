@@ -10,6 +10,7 @@
       'Credits': 'Autorzy', 'Close': 'Zamknij', 'Image credits': 'Autorzy ilustracji', 'Images are scaled; some are cropped.': 'Obrazy zmniejszono; niektóre przycięto.',
       'Breakthrough': 'Przełom', 'Principle': 'Zasada działania', 'Influence': 'Wpływ',
       'Could': 'Potrafił', 'Could not': 'Nie potrafił', 'Parts': 'Elementy',
+      'Electromechanical': 'Elektromechaniczne', 'Electronic': 'Elektroniczne',
       'Limitations': 'Ograniczenia', 'Fate': 'Losy', 'First built': 'Pierwsze wykonanie', 'Rival idea': 'Pomysł konkurencyjny'
     }
   };

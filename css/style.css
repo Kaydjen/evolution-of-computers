@@ -20,6 +20,11 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #fff; color:
 #back svg { opacity: .55; }
 #back:hover svg, #back.active svg { opacity: 1; }
 
+/* ---------- era captions (thin text on the line between two cards; placed by timeline.js) ---------- */
+.era { position: absolute; top: 50%; transform: translateX(-50%); width: 220px; text-align: center; pointer-events: none; z-index: 1; }
+.era::before { content: ''; display: block; width: 1px; height: 9px; margin: -4px auto 0; background: var(--main-mid); }
+.era span { display: block; margin-top: 6px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--main-mid); }
+
 /* ---------- dots ---------- */
 #dots { position: fixed; z-index: 5; left: 50%; bottom: 10px; transform: translateX(-50%); width: min(560px, calc(100vw - 32px)); display: flex; }
 .dot { flex: 1 1 0; height: 36px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
