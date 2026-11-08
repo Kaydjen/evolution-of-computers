@@ -118,6 +118,12 @@ p { margin: 0 0 12px; line-height: 1.5; font-size: 15px; }
 .card::-webkit-scrollbar { display: none; }
 .fade { position: sticky; bottom: 0; height: 64px; margin-top: -64px; z-index: 3; pointer-events: none; opacity: 0; background: linear-gradient(to bottom, rgb(255 255 255 / 0), #fff 85%); }
 
+/* ---------- closing card ---------- */
+.closing .main { padding: 72px 24px; }
+.closing h2.title { margin-top: 0; }
+.closing .meta { font-size: 16px; }
+.closing .byline { margin-top: 36px; font-size: 13px; color: var(--main-mid); }
+
 /* ---------- generation card ---------- */
 .photos { display: grid; grid-template-columns: repeat(var(--n, 2), 1fr); gap: 20px; max-width: calc(var(--n, 2) * 260px); margin: 0 auto; }
 figure { margin: 0; }

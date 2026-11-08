@@ -88,6 +88,10 @@
     };
     var main = el('div', 'main');
     card.setAttribute('aria-label', c.name);
+    if (c.type === 'closing') {   // the last card: a title and one line
+      add(main, el('h2', 'title', c.name), el('div', 'meta', c.meta), el('div', 'byline', c.byline));
+      return add(card, main);
+    }
 
     if (c.type === 'generation') {
       if (c.captions.length) {

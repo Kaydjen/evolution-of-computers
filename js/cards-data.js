@@ -903,6 +903,13 @@ window.CARDS = {
      "text": "Graphics chips (GPUs) take the idea further, with many simple cores."
     }
    ]
+  },
+  {
+   "n": 26,
+   "type": "closing",
+   "name": "Thank you for your attention",
+   "meta": "From the abacus to multicore",
+   "byline": "Project by Kaydjen"
   }
  ],
  "pl": [
@@ -1809,6 +1816,13 @@ window.CARDS = {
      "text": "Układy graficzne (GPU) rozwijają ten pomysł, z wieloma prostymi rdzeniami."
     }
    ]
+  },
+  {
+   "n": 26,
+   "type": "closing",
+   "name": "Dziękuję za uwagę",
+   "meta": "Od abakusa do wielordzeniowości",
+   "byline": "Projekt wykonał Kaydjen"
   }
  ]
 };
