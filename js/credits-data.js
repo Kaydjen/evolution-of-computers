@@ -289,6 +289,15 @@ window.CREDITS = [
   "local": "images/21-diagram-reading-from-a-set-associative-cache.svg"
  },
  {
+  "n": 21,
+  "title": "Supercomputer NSA-IBM360 85.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Supercomputer_NSA-IBM360_85.jpg",
+  "author": "Unidentified US government agent",
+  "licence": "Public domain",
+  "licenceUrl": "",
+  "local": "images/21-ibm-system-360-model-85-console.jpg"
+ },
+ {
   "n": 22,
   "title": "Intel 4004 open.jpg",
   "page": "https://commons.wikimedia.org/wiki/File:Intel_4004_open.jpg",
@@ -314,6 +323,15 @@ window.CREDITS = [
   "licence": "CC BY-SA 3.0",
   "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
   "local": "images/23-acorn-arm-evaluation-system.jpg"
+ },
+ {
+  "n": 23,
+  "title": "5 Stage Pipeline.svg",
+  "page": "https://commons.wikimedia.org/wiki/File:5_Stage_Pipeline.svg",
+  "author": "Inductiveload",
+  "licence": "Public domain",
+  "licenceUrl": "",
+  "local": "images/23-diagram-classic-risc-five-stage-pipeline.svg"
  },
  {
   "n": 25,

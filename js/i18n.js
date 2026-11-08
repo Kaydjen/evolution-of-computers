@@ -36,9 +36,9 @@
     18: { photo: ['DEC PDP-8/I', 'Komputer pokładowy Apollo'] },
     19: { photo: ['Panel IBM System/360 Model 40'] },
     20: { photo: ['Konsola IBM 7030 Stretch'], diagram: 'Czteroetapowy potok instrukcji' },
-    21: { diagram: 'Odczyt z pamięci podręcznej o skojarzeniu zbiorowym' },
+    21: { photo: ['Konsola IBM System/360 Model 85'], diagram: 'Odczyt z pamięci podręcznej o skojarzeniu zbiorowym' },
     22: { photo: ['Układ Intel 4004', 'Apple II'] },
-    23: { photo: ['Zestaw uruchomieniowy Acorn ARM'] },
+    23: { photo: ['Zestaw uruchomieniowy Acorn ARM'], diagram: 'Klasyczny pięcioetapowy potok RISC: pięć nakładających się w czasie instrukcji' },
     25: { photo: ['Rdzeń procesora dwurdzeniowego (Intel Wolfdale)'], diagram: 'Procesor dwurdzeniowy: rdzenie, pamięci podręczne i magistrala' }
   };
 

@@ -71,13 +71,13 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #fff; color:
 .main { padding: 24px; }
 .media { background: var(--main-light); aspect-ratio: 4/3; overflow: hidden; }
 .media {   /* edges dissolve into the white card: horizontal and vertical fades intersected */
-  --fade: min(12%, 36px);
+  --fade: min(6%, 18px);
   -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent), linear-gradient(to bottom, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
   mask-image: linear-gradient(to right, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent), linear-gradient(to bottom, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
   -webkit-mask-composite: source-in; mask-composite: intersect;
 }
 .media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.media.diagram { background: #fff; }
+.media.diagram { background: #fff; --fade: min(2.5%, 7px); }   /* a narrower fade so drawn lines near the edge stay readable */
 .media.diagram img { object-fit: contain; }
 
 .top { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 20px; align-items: center; }

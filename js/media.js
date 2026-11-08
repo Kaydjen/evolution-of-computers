@@ -207,7 +207,12 @@ window.MEDIA = {
   }
  },
  "21": {
-  "photo": [],
+  "photo": [
+   {
+    "src": "images/21-ibm-system-360-model-85-console.jpg",
+    "alt": "IBM System/360 Model 85 console"
+   }
+  ],
   "diagram": {
    "src": "images/21-diagram-reading-from-a-set-associative-cache.svg",
    "alt": "Reading from a set-associative cache"
@@ -231,7 +236,11 @@ window.MEDIA = {
     "src": "images/23-acorn-arm-evaluation-system.jpg",
     "alt": "Acorn ARM evaluation system"
    }
-  ]
+  ],
+  "diagram": {
+   "src": "images/23-diagram-classic-risc-five-stage-pipeline.svg",
+   "alt": "Classic RISC five-stage pipeline: five instructions overlapping in time"
+  }
  },
  "25": {
   "photo": [

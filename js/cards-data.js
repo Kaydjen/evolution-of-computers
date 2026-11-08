@@ -1126,7 +1126,7 @@ window.CARDS = {
    "breakthrough": "Zrobił kalkulator na tyle solidny, by go sprzedawać: walec schodkowy i przesuwany wózek wykonywały cztery działania.",
    "influence": "Biura używały go przez dziesięciolecia; maszyna Odhnera z kołem zębatym (1874) zachowała sposób obsługi.",
    "meta": "patent 1820 · produkcja seryjna 1851 · Thomas de Colmar",
-   "principle": "Korba obraca walec schodkowy, czyli walec z zębami rosnącej długości. Suwak ustawia cyfrę do dodania, a więc ile zębów sięga kół liczących; wynik widać w okienkach. Aby mnożyć, użytkownik obraca korbę tyle razy, ile wynosi cyfra mnożnika, po czym przesuwa wózek o jedno miejsce.",
+   "principle": "Korba obraca walec schodkowy, czyli walec z zębami rosnącej długości. Suwak ustawia cyfrę do dodania, czyli ile zębów sięga kół liczących; wynik widać w okienkach. Aby mnożyć, użytkownik obraca korbę tyle razy, ile wynosi cyfra mnożnika, po czym przesuwa wózek o jedno miejsce.",
    "could": [
     "Dodaje, odejmuje.",
     "Mnoży, dzieli."
@@ -1173,7 +1173,7 @@ window.CARDS = {
     },
     {
      "key": "Fate",
-     "text": "Muzeum Nauki zbudowało działającą Maszynę różnicową nr 2 w latach 1985-91."
+     "text": "Londyńskie Muzeum Nauki zbudowało działającą Maszynę różnicową nr 2 w latach 1985-91."
     }
    ]
   },
@@ -1184,7 +1184,7 @@ window.CARDS = {
    "breakthrough": "Zaprojektował na papierze maszynę, która mogła wykonywać długie listy instrukcji, nie tylko jeden rodzaj sumy.",
    "influence": "Jej magazyn, młyn i sterowanie kartami zapowiadają pamięć, procesor i program późniejszych komputerów.",
    "meta": "1837 · Charles Babbage",
-   "principle": "Magazyn, pamięć na 1000 liczb po 40 cyfr, trzyma liczby. Młyn, jej jednostka arytmetyczna, robi na nich rachunki, jeden po drugim. Karty perforowane mówią maszynie, co robić dalej, tak jak mówią krosnu Jacquarda, które nici unieść. Wynik może cofnąć ją do powtórzenia kroków albo pominąć kolejne.",
+   "principle": "Magazyn, pamięć na 1000 liczb po 40 cyfr, trzyma liczby. Młyn, jej jednostka arytmetyczna, robi na nich rachunki, jeden po drugim. Karty perforowane mówią maszynie, co robić dalej, tak jak mówią krosnu Jacquarda, które nici unieść. Wynik może cofnąć maszynę, by powtórzyła kroki, albo kazać jej pominąć następne.",
    "could": [
     "Wykonuje program z kart.",
     "Powtarza i rozgałęzia."
@@ -1610,8 +1610,8 @@ window.CARDS = {
     "lead": "Mała, szybka pamięć znajduje się obok procesora i trzyma kopie niedawno użytych danych:",
     "steps": [
      "Procesor prosi o adres; najpierw sprawdza się pamięć podręczną.",
-     "Jeśli dane tam są, (trafienie), wracają od razu.",
-     "Jeśli nie, (chybienie), bierze się je z wolnej pamięci głównej i zapamiętuje, a starą kopię odrzuca."
+     "Jeśli dane tam są (trafienie), wracają od razu.",
+     "Jeśli nie (chybienie), bierze się je z wolnej pamięci głównej i zapamiętuje, a starą kopię odrzuca."
     ]
    },
    "parts": [
