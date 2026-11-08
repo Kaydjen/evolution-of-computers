@@ -116,7 +116,7 @@
       main.appendChild(top);
     }
 
-    add(main, el('h1', '', c.name), el('div', 'meta', c.meta));
+    add(main, el('h2', 'title', c.name), el('div', 'meta', c.meta));
 
     var bottom = el('div', 'bottom');
     if (c.type === 'mechanism') {

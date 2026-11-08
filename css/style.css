@@ -22,14 +22,15 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #fff; color:
 
 /* ---------- dots ---------- */
 #dots { position: fixed; z-index: 5; left: 50%; bottom: 10px; transform: translateX(-50%); width: min(560px, calc(100vw - 32px)); display: flex; }
-.dot { flex: 1 1 0; height: 28px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
+.dot { flex: 1 1 0; height: 36px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
 .dot::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--main-mid); opacity: .5; transition: transform .2s, opacity .2s, background .2s; }
 .dot:hover::before { opacity: 1; transform: scale(1.6); }
 .dot.current::before { background: var(--accent); opacity: 1; transform: scale(1.6); }
 #dot-tip { position: fixed; z-index: 6; bottom: 44px; max-width: calc(100vw - 16px); padding: 6px 10px; border-radius: 6px; background: var(--main); color: #fff; font-size: 13px; line-height: 1.3; white-space: nowrap; pointer-events: none; opacity: 0; transform: translateY(4px); transition: opacity .15s, transform .15s; }
 #dot-tip.show { opacity: 1; transform: none; }
 #dot-tip::after { content: ''; position: absolute; top: 100%; left: var(--pointer, 50%); width: 8px; height: 8px; background: var(--main); transform: translate(-50%, -4px) rotate(45deg); border-radius: 0 0 2px 0; }
-.dot:focus-visible { outline: 1px solid var(--main-mid); outline-offset: -2px; border-radius: 4px; }
+.dot:focus-visible { outline: 2px solid var(--main); outline-offset: -3px; border-radius: 4px; }
+.dot:focus-visible::before { opacity: 1; transform: scale(1.6); }
 
 /* ---------- language buttons ---------- */
 #lang { position: fixed; z-index: 5; right: 16px; bottom: 12px; display: flex; align-items: center; gap: 2px; font-size: 13px; color: var(--main-mid); }
@@ -69,6 +70,12 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #fff; color:
 }
 .main { padding: 24px; }
 .media { background: var(--main-light); aspect-ratio: 4/3; overflow: hidden; }
+.media {   /* edges dissolve into the white card: horizontal and vertical fades intersected */
+  --fade: min(12%, 36px);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent), linear-gradient(to bottom, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent), linear-gradient(to bottom, transparent, #000 var(--fade), #000 calc(100% - var(--fade)), transparent);
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+}
 .media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .media.diagram { background: #fff; }
 .media.diagram img { object-fit: contain; }
@@ -85,7 +92,8 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #fff; color:
 .cell > h3, .side > h3 { text-align: center; }
 .bottom p, .center-top p { text-align: center; }
 
-h1 { font-size: 44px; margin: 28px 0 4px; overflow-wrap: anywhere; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+h2.title { font-size: 44px; margin: 28px 0 4px; overflow-wrap: anywhere; }
 .meta { font-size: 14px; color: var(--main-mid); }
 h3 { font-size: 13px; margin: 0 0 4px; color: var(--main-mid); text-transform: uppercase; letter-spacing: .06em; }
 h3.accent, h2.accent { color: var(--accent); }
@@ -110,7 +118,7 @@ p { margin: 0 0 12px; line-height: 1.5; font-size: 15px; }
 figure { margin: 0; }
 figcaption { font-size: 12px; color: var(--main-mid); margin-top: 6px; }
 .kicker { font-size: 12px; color: var(--main-mid); text-transform: uppercase; letter-spacing: .06em; margin-top: 28px; opacity: .8; }
-.generation h1 { margin-top: 2px; }
+.generation h2.title { margin-top: 2px; }
 .compare { display: grid; grid-template-columns: 1fr auto 1fr; column-gap: 10px; row-gap: 4px; margin-bottom: 20px; font-size: 15px; line-height: 1.5; }
 .compare .name { text-align: right; }
 .compare .val { text-align: left; }
@@ -125,6 +133,6 @@ figcaption { font-size: 12px; color: var(--main-mid); margin-top: 6px; }
 @container (max-width: 760px) {
   .top, .top.solo, .top.nophoto, .bottom { grid-template-columns: 1fr; }
   .photos { grid-template-columns: 1fr; max-width: 320px; }
-  h1 { font-size: 30px; }
+  h2.title { font-size: 30px; }
 }
 

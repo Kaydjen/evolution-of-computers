@@ -64,6 +64,7 @@
     applyStatic: function () {
       document.documentElement.lang = lang;
       document.title = I18N.t('title');
+      document.getElementById('page-title').textContent = I18N.t('title');
       document.getElementById('back').setAttribute('aria-label', I18N.t('Previous'));
       document.getElementById('fwd').setAttribute('aria-label', I18N.t('Next'));
       document.getElementById('dots').setAttribute('aria-label', I18N.t('Cards'));

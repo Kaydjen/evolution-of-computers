@@ -116,7 +116,7 @@ window.CARDS = {
     },
     {
      "key": "Fate",
-     "text": "Kepler's machine burned in 1624; a working replica was built in 1960."
+     "text": "Kepler's machine burned in 1624; a working replica came c. 1960."
     },
     {
      "label": "Priority",
@@ -531,13 +531,18 @@ window.CARDS = {
     "rows": [
      {
       "name": "Performance",
-      "eq": "≈",
-      "value": "6×faster"
+      "eq": "",
+      "value": "at least 5×faster"
      },
      {
       "name": "Power consumption",
       "eq": "",
       "value": "up to 70% less"
+     },
+     {
+      "name": "Size",
+      "eq": "",
+      "value": "up to 50% less"
      }
     ]
    },
@@ -580,14 +585,9 @@ window.CARDS = {
     "title": "Compared with the 2nd generation",
     "rows": [
      {
-      "name": "Performance",
-      "eq": "",
-      "value": "same speed"
-     },
-     {
       "name": "Size",
-      "eq": "≈",
-      "value": "2×smaller"
+      "eq": "",
+      "value": "much smaller"
      }
     ]
    },
@@ -1022,7 +1022,7 @@ window.CARDS = {
     },
     {
      "key": "Fate",
-     "text": "Maszyna Keplera spłonęła w 1624 r.; działającą replikę zbudowano w 1960 r."
+     "text": "Maszyna Keplera spłonęła w 1624 r.; działającą replikę zbudowano około 1960 r."
     },
     {
      "label": "Pierwszeństwo",
@@ -1437,13 +1437,18 @@ window.CARDS = {
     "rows": [
      {
       "name": "Wydajność",
-      "eq": "≈",
-      "value": "6×szybciej"
+      "eq": "",
+      "value": "co najmniej 5×szybciej"
      },
      {
       "name": "Pobór mocy",
       "eq": "",
       "value": "do 70% mniej"
+     },
+     {
+      "name": "Rozmiar",
+      "eq": "",
+      "value": "do 50% mniej"
      }
     ]
    },
@@ -1486,14 +1491,9 @@ window.CARDS = {
     "title": "W porównaniu z 2. generacją",
     "rows": [
      {
-      "name": "Wydajność",
-      "eq": "",
-      "value": "ta sama"
-     },
-     {
       "name": "Rozmiar",
-      "eq": "≈",
-      "value": "2×mniejszy"
+      "eq": "",
+      "value": "znacznie mniejszy"
      }
     ]
    },
