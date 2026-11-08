@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 150" width="900" height="150" role="img" aria-label="Evolution of Computers. HTML, CSS, JavaScript.">
+  <style>
+    .t { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; text-anchor: middle; }
+    /* 26 dots, 27.2 px apart: 26 stepped positions from the first dot to the last; the loop starts in the middle */
+    .hop { animation: hop 13s steps(26, jump-none) -6.5s infinite alternate; }
+    @keyframes hop { from { transform: translateX(0); } to { transform: translateX(680px); } }
+    @media (prefers-reduced-motion: reduce) { .hop { animation: none; transform: translateX(340px); } }
+  </style>
+  <defs>
+    <linearGradient id="fade" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#8795a3" stop-opacity="0"/>
+      <stop offset="0.15" stop-color="#8795a3"/>
+      <stop offset="0.85" stop-color="#8795a3"/>
+      <stop offset="1" stop-color="#8795a3" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="0.5" y="0.5" width="899" height="149" rx="10" fill="#ffffff" stroke="#8795a3"/>
+  <text class="t" x="450" y="66" font-size="38" font-weight="700" fill="#2b3a4a">Evolution of Computers</text>
+  <text class="t" x="450" y="94" font-size="15" letter-spacing="1.5" fill="#8795a3">HTML · CSS · JavaScript</text>
+  <rect x="40" y="121" width="820" height="2" fill="url(#fade)"/>
+  <g fill="#8795a3" fill-opacity="0.55"><circle cx="110.0" cy="122" r="3"/><circle cx="137.2" cy="122" r="3"/><circle cx="164.4" cy="122" r="3"/><circle cx="191.6" cy="122" r="3"/><circle cx="218.8" cy="122" r="3"/><circle cx="246.0" cy="122" r="3"/><circle cx="273.2" cy="122" r="3"/><circle cx="300.4" cy="122" r="3"/><circle cx="327.6" cy="122" r="3"/><circle cx="354.8" cy="122" r="3"/><circle cx="382.0" cy="122" r="3"/><circle cx="409.2" cy="122" r="3"/><circle cx="436.4" cy="122" r="3"/><circle cx="463.6" cy="122" r="3"/><circle cx="490.8" cy="122" r="3"/><circle cx="518.0" cy="122" r="3"/><circle cx="545.2" cy="122" r="3"/><circle cx="572.4" cy="122" r="3"/><circle cx="599.6" cy="122" r="3"/><circle cx="626.8" cy="122" r="3"/><circle cx="654.0" cy="122" r="3"/><circle cx="681.2" cy="122" r="3"/><circle cx="708.4" cy="122" r="3"/><circle cx="735.6" cy="122" r="3"/><circle cx="762.8" cy="122" r="3"/><circle cx="790.0" cy="122" r="3"/></g>
+  <circle class="hop" cx="110" cy="122" r="5" fill="#e07a1f"/>
+</svg>
