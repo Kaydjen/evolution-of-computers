@@ -450,7 +450,7 @@ window.CARDS = {
    "more": [
     {
      "key": "Limitations",
-     "text": "Tubes were hot, big and burned out often; ENIAC had about 17,500 and drew about 150 kW. Next: transistors."
+     "text": "Tubes were hot, big and burned out often; ENIAC had about 17,500 and drew about 150 kW."
     },
     {
      "label": "Also",
@@ -552,7 +552,7 @@ window.CARDS = {
     },
     {
      "key": "Limitations",
-     "text": "Early transistors were unreliable, and tens of thousands of parts were wired by hand. Next: integrated circuits."
+     "text": "Early transistors were unreliable, and tens of thousands of parts were wired by hand."
     },
     {
      "label": "Memory",
@@ -597,7 +597,7 @@ window.CARDS = {
     },
     {
      "key": "Limitations",
-     "text": "A chip held dozens to thousands of components, so a processor still needed many chips. Next: the microprocessor."
+     "text": "A chip held dozens to thousands of components, so a processor still needed many chips."
     },
     {
      "label": "Invention",
@@ -775,7 +775,7 @@ window.CARDS = {
     },
     {
      "key": "Limitations",
-     "text": "The 4004 was a 4-bit chip and slow, and a single fast chip gets hot. Next: several processors on one chip."
+     "text": "The 4004 was a 4-bit chip and slow, and a single fast chip gets hot."
     },
     {
      "label": "Machines",
@@ -1363,7 +1363,7 @@ window.CARDS = {
    "more": [
     {
      "key": "Limitations",
-     "text": "Lampy były gorące, duże i często się przepalały; ENIAC miał około 17 500 i pobierał około 150 kW. Dalej: tranzystory."
+     "text": "Lampy były gorące, duże i często się przepalały; ENIAC miał około 17 500 i pobierał około 150 kW."
     },
     {
      "label": "Także",
@@ -1465,7 +1465,7 @@ window.CARDS = {
     },
     {
      "key": "Limitations",
-     "text": "Wczesne tranzystory zawodziły, a dziesiątki tysięcy elementów łączono ręcznie. Dalej: układy scalone."
+     "text": "Wczesne tranzystory zawodziły, a dziesiątki tysięcy elementów łączono ręcznie."
     },
     {
      "label": "Pamięć",
@@ -1510,7 +1510,7 @@ window.CARDS = {
     },
     {
      "key": "Limitations",
-     "text": "Układ miał od kilkudziesięciu do tysięcy elementów, więc procesor wciąż wymagał wielu układów. Dalej: mikroprocesor."
+     "text": "Układ miał od kilkudziesięciu do tysięcy elementów, więc procesor wciąż wymagał wielu układów."
     },
     {
      "label": "Wynalazek",
@@ -1688,7 +1688,7 @@ window.CARDS = {
     },
     {
      "key": "Limitations",
-     "text": "4004 był układem 4-bitowym i wolnym, a pojedynczy szybki układ się grzeje. Dalej: kilka procesorów w jednym układzie."
+     "text": "4004 był układem 4-bitowym i wolnym, a pojedynczy szybki układ się grzeje."
     },
     {
      "label": "Maszyny",
