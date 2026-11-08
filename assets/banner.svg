@@ -4,7 +4,6 @@
     /* 26 dots, 27.2 px apart: 26 stepped positions from the first dot to the last; the loop starts in the middle */
     .hop { animation: hop 13s steps(26, jump-none) -6.5s infinite alternate; }
     @keyframes hop { from { transform: translateX(0); } to { transform: translateX(680px); } }
-    @media (prefers-reduced-motion: reduce) { .hop { animation: none; transform: translateX(340px); } }
   </style>
   <defs>
     <linearGradient id="fade" x1="0" x2="1" y1="0" y2="0">

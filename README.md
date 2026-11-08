@@ -18,6 +18,8 @@ A small static website. Each card is one step in the history of computing, from 
 
 <div align="center">
 
+## A few examples
+
 | Pascaline | Jacquard loom |
 |:---:|:---:|
 | ![Pascaline card](assets/pascaline.png) | ![Jacquard loom card](assets/jacquard-loom.png) |
@@ -30,8 +32,6 @@ A small static website. Each card is one step in the history of computing, from 
 |:---:|:---:|
 | ![Vacuum tube card with the Interesting panel open](assets/vacuum-tube-interesting.png) | ![Closing card](assets/closing.png) |
 
-</div>
-
 ## Run
 
 No build step: open `index.html` in a browser.
@@ -39,8 +39,6 @@ No build step: open `index.html` in a browser.
 ## License
 
 Code: [MIT](LICENSE). Images come from Wikimedia Commons and keep their own licences, see [CREDITS.md](CREDITS.md).
-
-<div align="center">
 
 <a href="https://github.com/Kaydjen"><img src="assets/author.svg" alt="by Kaydjen" width="172"></a>
 
