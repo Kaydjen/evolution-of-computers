@@ -6,8 +6,7 @@
 
 [**evolution-of-computers.vercel.app**](https://evolution-of-computers.vercel.app/)
 
-Each card is one step in the history of computing,<br>
-from mechanical calculators to architecture ideas.
+A small static website. Each card is one step in the history of computing, from mechanical calculators to computer generations and architecture ideas, with a photo, a plain-words explanation of the principle and a short "Interesting" panel.
 
 26 cards · English and Polish · Photos from Wikimedia Commons
 
@@ -38,7 +37,8 @@ No build step: open `index.html` in a browser.
 ## License
 
 [MIT](LICENSE) · [CREDITS](CREDITS.md)
-Images come from Wikimedia Commons and keep their own licences.
+
+<img src="assets/licence-note.svg" alt="Images come from Wikimedia Commons and keep their own licences." width="440">
 
 by
 
