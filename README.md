@@ -38,8 +38,11 @@ No build step: open `index.html` in a browser.
 
 ## License
 
-Code: [MIT](LICENSE). Images come from Wikimedia Commons and keep their own licences, see [CREDITS.md](CREDITS.md).
+[MIT](LICENSE) · [CREDITS](CREDITS.md)
+Images come from Wikimedia Commons and keep their own licences.
 
-<a href="https://github.com/Kaydjen"><img src="assets/author.svg" alt="by Kaydjen" width="172"></a>
+by
+
+<a href="https://github.com/Kaydjen"><img src="assets/author.svg" alt="Kaydjen" width="172"></a>
 
 </div>
