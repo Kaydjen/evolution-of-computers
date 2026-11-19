@@ -16,6 +16,8 @@ A small static website. Each card is one step in the history of computing, from 
 
 <div align="center">
 
+https://github.com/user-attachments/assets/90f99c51-36f2-4c9e-857c-e8be4192a799
+
 ## Run
 
 No build step: open `index.html` in a browser.
