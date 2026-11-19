@@ -65,9 +65,9 @@ window.CREDITS = [
  },
  {
   "n": 5,
-  "title": "own 3D render (kaydjen-pascaline)",
-  "page": "https://doi.org/10.3390/machines9070136",
-  "author": "Kaydjen, based on the reconstruction by Rojas-Sola, del Rio-Cidoncha, Fernandez-de la Puente Sarria, Galiano-Delgado, Machines 9(7), 136 (2021)",
+  "title": "kaydjen-pascaline: 3D model and render",
+  "page": "https://github.com/Kaydjen/kaydjen-pascaline",
+  "author": "Kaydjen (3D model and render), based on the reconstruction by Rojas-Sola, del Rio-Cidoncha, Fernandez-de la Puente Sarria, Galiano-Delgado, Machines 9(7), 136 (2021), doi:10.3390/machines9070136",
   "licence": "MIT (render) / CC BY 4.0 (source reconstruction)",
   "licenceUrl": "https://creativecommons.org/licenses/by/4.0/",
   "local": "images/05-pascaline-mechanism-render.jpg"
