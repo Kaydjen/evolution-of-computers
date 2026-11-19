@@ -16,20 +16,6 @@ A small static website. Each card is one step in the history of computing, from 
 
 <div align="center">
 
-## A few examples
-
-| Pascaline | Jacquard loom |
-|:---:|:---:|
-| ![Pascaline card](assets/pascaline.png) | ![Jacquard loom card](assets/jacquard-loom.png) |
-
-| Analytical Engine | Vacuum tube |
-|:---:|:---:|
-| ![Analytical Engine card](assets/analytical-engine.png) | ![Vacuum tube card](assets/vacuum-tube.png) |
-
-| "Interesting" panel | Closing card |
-|:---:|:---:|
-| ![Vacuum tube card with the Interesting panel open](assets/vacuum-tube-interesting.png) | ![Closing card](assets/closing.png) |
-
 ## Run
 
 No build step: open `index.html` in a browser.
