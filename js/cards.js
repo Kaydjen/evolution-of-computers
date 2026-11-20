@@ -14,7 +14,24 @@
   function block(title, tag, cls) {
     return el(tag || 'h3', cls, t(title));
   }
-  function para(text) { return el('p', '', text); }
+  // Plain text; a backslash-n is a line break, a [label](https://...) part becomes a link that opens in a new tab.
+  function para(text) {
+    var p = el('p'), br = function (t) {
+      t.split('\\n').forEach(function (s, i) {
+        if (i) p.appendChild(document.createElement('br'));
+        p.appendChild(document.createTextNode(s));
+      });
+    }, re = /\[([^\]]+)\]\((https:\/\/[^)\s]+)\)/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      br(text.slice(last, m.index));
+      var a = el('a', '', m[1]);
+      a.href = m[2]; a.target = '_blank'; a.rel = 'noopener';
+      p.appendChild(a);
+      last = re.lastIndex;
+    }
+    br(text.slice(last));
+    return p;
+  }
   function lines(list) {
     var p = el('p');
     list.forEach(function (t, i) {

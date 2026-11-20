@@ -152,6 +152,10 @@ window.CARDS = {
     {
      "label": "Privilege",
      "text": "In 1649 the French king gave Pascal the sole right to make it."
+    },
+    {
+     "label": "Try it",
+     "text": "I built an interactive Pascaline model, take a look on GitHub:\\n[kaydjen-pascaline](https://github.com/Kaydjen/kaydjen-pascaline)"
     }
    ]
   },
@@ -1065,6 +1069,10 @@ window.CARDS = {
     {
      "label": "Przywilej",
      "text": "W 1649 r. król Francji dał Pascalowi wyłączne prawo do jej produkcji."
+    },
+    {
+     "label": "Wypróbuj",
+     "text": "Zbudowałem interaktywny model pascaliny, zajrzyj na GitHub:\\n[kaydjen-pascaline](https://github.com/Kaydjen/kaydjen-pascaline)"
     }
    ]
   },

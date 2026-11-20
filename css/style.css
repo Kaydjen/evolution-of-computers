@@ -113,6 +113,8 @@ p { margin: 0 0 12px; line-height: 1.5; font-size: 15px; }
 .panel > div { overflow: hidden; }
 .panel-inner { padding: 20px 24px 8px; }
 .panel-inner > * { max-width: 60ch; margin-left: auto; margin-right: auto; }
+.panel-inner a { color: var(--main); text-decoration-color: var(--main-mid); }
+.panel-inner a:hover { color: var(--accent); }
 
 /* soft fade at the bottom of a scrolling card (opacity set by cards.js); it sticks to the visible bottom edge and takes no room */
 .card::-webkit-scrollbar { display: none; }
